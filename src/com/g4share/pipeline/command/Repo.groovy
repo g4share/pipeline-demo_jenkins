@@ -2,17 +2,11 @@ package com.g4share.pipeline.command
 
 class Repo extends Command {
 
-    Repo(context) {
-        super(context)
-    }
+    def sh
 
     RepoInfo checkout() {
-        try {
-            def scmInfo = context.checkout context.scm
-            return new RepoInfo(scmInfo: scmInfo, repoInfo: repoInfo())
-        } catch (Exception e) {
-            context.error "${e}"
-        }
+        def scmInfo = context.checkout context.scm
+        return new RepoInfo(scmInfo: scmInfo, repoInfo: repoInfo())
     }
 
     private def repoInfo() {

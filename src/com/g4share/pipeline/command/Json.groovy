@@ -7,34 +7,26 @@ class Json extends Command {
 
     private TemplateProcessor templateProcessor = new TemplateProcessor()
 
-    Json(context) {
-        super(context)
-    }
-
-    def config() {
+    def config(String commandName, Map<String, String> vars) {
         def json = jsonParse('dependencies.json')
-        context.echo "============= ${json.name}"
-        loadResource((String)json.name)
-        json
+        loadResource(commandName, (String)json.name, vars)
     }
 
-    def loadResource(String projectName) {
-        String x = context.libraryResource("projects/config/${projectName}.json");
-        context.echo "============= ${x}"
-        Map<String, String> variables = [randomSchema: "${ransomSchema()}"]
-        context.echo "============= ${templateProcessor.fetchTemplate(x, variables)}"
-    }
+    def loadResource(String commandName, String projectName, Map<String, String> vars) {
+        String json = context.libraryResource("projects/config/${projectName}.json");
+        String fetchedJson = templateProcessor.fetchTemplate(json, vars)
 
-    def rawResource() {
-        context.libraryResource("projects/common-vars.json");
-    }
-
-    def ransomSchema() {
-        return "abc"
+        jsonSlurper(fetchedJson)
+                .commands
+                .find { it.name == commandName }
     }
 
     private jsonParse(String jsonFile) {
         String json = context.readFile(jsonFile)
+        return jsonSlurper(json)
+    }
+
+    def jsonSlurper(String json) {
         return new JsonSlurperClassic().parseText(json)
     }
 }

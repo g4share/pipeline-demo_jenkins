@@ -1,0 +1,31 @@
+{
+  "commands": [
+    {
+      "name": "compile",
+      "script": "./mvnw compile",
+      "parameters": {
+        "-Djdbc.url": "jdbc:postgresql://postgres:5432/pipeline_demo",
+        "-Djdbc.username": "postgres",
+        "-Djdbc.password": "S3cret",
+        "-Dserver.port": "8081",
+        "-Dservice.schema": "${randomSchema}"
+      }
+    },
+    {
+      "name": "unit-test",
+      "script": "./mvnw test",
+      "_script": "./mvnw surefire:test",
+      "parameters": {
+        "-Djdbc.url": "jdbc:postgresql://postgres:5432/pipeline_demo",
+        "-Djdbc.username": "postgres",
+        "-Djdbc.password": "S3cret",
+        "-Dserver.port": "8081",
+        "-Dservice.schema": "${randomSchema}"
+      }
+    },
+    {
+      "name": "integration-test",
+      "script": "./mvnw failsafe:integration-test"
+    }
+  ]
+}

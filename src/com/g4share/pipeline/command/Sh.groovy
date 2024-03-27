@@ -1,7 +1,6 @@
 package com.g4share.pipeline.command
 
-class Sh implements Serializable {
-    def context
+class Sh extends Command {
 
     def exec(script, returnStdout = true, enabled = true) {
         if (!enabled) {

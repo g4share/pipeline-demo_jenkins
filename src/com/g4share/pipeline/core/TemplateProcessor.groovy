@@ -10,15 +10,4 @@ class TemplateProcessor implements Serializable {
                 .make(vars)
          result
     }
-
-    String fetchTemplate(String template1) {
-        def config = "foo"
-        def template = { "URL from config is ${config}" }
-
-        (template())
-    }
-
-    String randomSchema() {
-        return "rtyuiop"
-    }
 }

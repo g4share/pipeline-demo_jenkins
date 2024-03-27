@@ -1,13 +1,25 @@
 {
-  "command": {
-    "name": "migrate",
-    "script": "./mvnw flyway:migrate",
-    "parameters": {
-      "-Dflyway.url": "jdbc:postgresql://localhost:5432/pipeline_demo",
-      "-Dflyway.user": "postgres",
-      "-Dflyway.password": "S3cret",
-      "-Dflyway.placeholders.schema": "${randomSchema}",
-      "-Dflyway.cleanDisabled": "false"
+  "commands": [
+    {
+      "name": "migrate",
+      "script": "./mvnw flyway:migrate",
+      "parameters": {
+        "-Dflyway.url": "jdbc:postgresql://postgres:5432/pipeline_demo",
+        "-Dflyway.user": "postgres",
+        "-Dflyway.password": "S3cret",
+        "-Dflyway.schemas": "${randomSchema}"
+      }
+    },
+    {
+      "name": "clean",
+      "script": "./mvnw flyway:clean",
+      "parameters": {
+        "-Dflyway.url": "jdbc:postgresql://postgres:5432/pipeline_demo",
+        "-Dflyway.user": "postgres",
+        "-Dflyway.password": "S3cret",
+        "-Dflyway.schemas": "${randomSchema}",
+        "-Dflyway.cleanDisabled": "false"
+      }
     }
-  }
+  ]
 }
